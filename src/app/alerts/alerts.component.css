@@ -1,0 +1,8 @@
+mat-card {
+  margin: 1em 0;
+}
+.mat-fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

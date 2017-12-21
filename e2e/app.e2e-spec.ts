@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('elastic-alert-ui App', () => {
+describe('elastic-alerts-ui App', () => {
   let page: AppPage;
 
   beforeEach(() => {
