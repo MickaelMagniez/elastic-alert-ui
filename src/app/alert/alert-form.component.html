@@ -1,19 +1,48 @@
+<form [formGroup]="alertForm" (ngSubmit)="createAlert(alertForm)">
 
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Configure alert</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
 
-<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
-  <mat-form-field>
-    <input matInput type="text"
-           required
-           [(ngModel)]="model.name"
-           name="name"
-           #name="ngModel">
+      <mat-form-field>
+        <input matInput required formControlName="name" placeholder="Alert name" autocomplete="off">
+      </mat-form-field>
+      <!--<mat-form-field>-->
+        <!--<input type="hidden" formControlName="id">-->
+      <!--</mat-form-field>-->
 
-  </mat-form-field>
-  <!--name: {{model.name}}-->
+      <app-alert-target [group]="alertForm.controls.targets"></app-alert-target>
 
-  <button mat-raised-button color="primary" (click)="createAlert(model)">
-    Submit
-  </button>
-  <!--<button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>-->
-  <!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->
+      <!--<div formArrayName="emails">-->
+        <!--<mat-list>-->
+          <!--<h3 mat-subheader>Emails</h3>-->
+          <!--<mat-list-item *ngFor="let email of alertForm.controls.emails.controls; let i=index">-->
+            <!--<mat-icon mat-list-icon>mail</mat-icon>-->
+            <!--<div [formGroupName]="i">-->
+              <!--<app-alert-recipient-email [group]="alertForm.controls.emails.controls[i]"></app-alert-recipient-email>-->
+            <!--</div>-->
+            <!--<div (click)="removeEmail(i)">-->
+              <!--<mat-icon>delete</mat-icon>-->
+            <!--</div>-->
+          <!--</mat-list-item>-->
+          <!--<mat-list-item>-->
+            <!--<button type="button" mat-button (click)="addEmail()">-->
+              <!--Add another email-->
+              <!--<mat-icon mat-list-icon>add</mat-icon>-->
+            <!--</button>-->
+          <!--</mat-list-item>-->
+          <!--<mat-divider></mat-divider>-->
+        <!--</mat-list>-->
+      <!--</div>-->
+      <pre>{{alertForm.value|json}}</pre>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button [disabled]="!alertForm.valid" color="primary">
+        Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </form>

@@ -30,6 +30,19 @@ export class AlertService {
       );
   }
 
+  getAlert (id: string): Observable<Alert> {
+    return this.http.get<Alert>(this.alertApiUrl + '/' + id)
+      .pipe(
+        map(_alert => {
+          const alert: Alert = _alert['alert'];
+          alert.targets.emails = alert.targets.emails || [];
+          return alert;
+        }),
+        tap(alert => this.log(`got alert`)),
+        catchError(this.handleError('getAlert', null))
+      );
+  }
+
   deleteAlert (id: string): Observable<string> {
     return this.http.delete<string>(this.alertApiUrl + '/' + id)
       .pipe(
@@ -38,12 +51,11 @@ export class AlertService {
       );
   }
 
-
   createAlert (alert: Alert): Observable<Alert> {
     return this.http.post<Alert>(this.alertApiUrl, alert, httpOptions)
       .pipe(
-        tap(_ => this.log(`deleted alert`)),
-        catchError(this.handleError('deleteAlert', null))
+        tap(_ => this.log(`created alert`)),
+        catchError(this.handleError('createAlert', null))
       );
   }
   //

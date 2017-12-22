@@ -2,11 +2,12 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {AlertsComponent} from './alerts/alerts.component';
-import {AlertComponent} from './alert/alert.component';
+import {AlertFormComponent} from './alert/alert-form.component';
 
 const routes: Routes = [
   {path: 'alerts', component: AlertsComponent},
-  {path: 'alerts/new', component: AlertComponent}
+  {path: 'alerts/new', component: AlertFormComponent},
+  {path: 'alerts/:id/edit', component: AlertFormComponent}
 ];
 
 @NgModule({
