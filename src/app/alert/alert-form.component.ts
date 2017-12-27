@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertService} from '../alert.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-alert-form',
@@ -13,6 +13,12 @@ export class AlertFormComponent implements OnInit {
     name: new FormControl()
   });
 
+
+  selectValues = [
+    {value: 'minute', viewValue: 'per Minute'},
+    {value: 'hour', viewValue: 'per Hour'}
+  ];
+
   constructor(private route: ActivatedRoute, private _fb: FormBuilder, private alertService: AlertService) {
 
   }
@@ -21,10 +27,16 @@ export class AlertFormComponent implements OnInit {
     this.alertForm = this._fb.group({
       id: [''],
       name: ['', Validators.required],
+      elastics: ['', Validators.required],
+      query: ['', Validators.required],
+      matchType: ['', Validators.required],
+      slider: [1, Validators.required],
+      sliderPeriod: ['minute', Validators.required],
       targets: this._fb.group({
         // emails: this._fb.array([])
       })
     });
+    // window.aaa = this.alertForm;
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -43,9 +55,17 @@ export class AlertFormComponent implements OnInit {
 
   createAlert(alert: any): void {
     console.log(alert.value);
-    this.alertService.createAlert(alert.value)
-      .subscribe(_alert => {
-        console.log(_alert);
-      });
+    if (this.route.snapshot.paramMap.get('id')) {
+      alert.value.id = this.route.snapshot.paramMap.get('id');
+      this.alertService.updateAlert(alert.value)
+        .subscribe(_alert => {
+          console.log(_alert);
+        });
+    } else {
+      this.alertService.createAlert(alert.value)
+        .subscribe(_alert => {
+          console.log(_alert);
+        });
+    }
   }
 }

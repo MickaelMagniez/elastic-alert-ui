@@ -9,6 +9,32 @@
       <mat-form-field>
         <input matInput required formControlName="name" placeholder="Alert name" autocomplete="off">
       </mat-form-field>
+      <mat-form-field>
+        <input matInput required formControlName="elastics" placeholder="Elastic servers" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput formControlName="query"  placeholder="query" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="50"></textarea>
+      </mat-form-field>
+      <!--<mat-form-field>-->
+        <mat-radio-group matInput formControlName="matchType">
+          <mat-radio-button value="once">Option 1</mat-radio-button>
+          <mat-radio-button value="number">
+            <mat-slider  formControlName="slider"></mat-slider>
+            <mat-form-field>
+              {{alertForm.controls.slider.value}}
+              <mat-select placeholder="Period" formControlName="sliderPeriod">
+                <mat-option *ngFor="let p of selectValues" [value]="p.value">
+
+                  {{ p.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+          </mat-radio-button>
+        </mat-radio-group>
+        <!--<textarea matInput formControlName="MatchOnce"  placeholder="query" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="50"></textarea>-->
+      <!--</mat-form-field>-->
       <!--<mat-form-field>-->
         <!--<input type="hidden" formControlName="id">-->
       <!--</mat-form-field>-->

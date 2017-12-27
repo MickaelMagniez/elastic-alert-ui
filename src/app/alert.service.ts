@@ -58,6 +58,14 @@ export class AlertService {
         catchError(this.handleError('createAlert', null))
       );
   }
+
+  updateAlert (alert: Alert): Observable<Alert> {
+    return this.http.put<Alert>(this.alertApiUrl + '/' + alert.id, alert, httpOptions)
+      .pipe(
+        tap(_ => this.log(`updated alert`)),
+        catchError(this.handleError('updateAlert', null))
+      );
+  }
   //
   // /** GET hero by id. Return `undefined` when id not found */
   // getHeroNo404<Data>(id: number): Observable<Hero> {
