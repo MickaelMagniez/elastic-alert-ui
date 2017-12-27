@@ -13,54 +13,55 @@
         <input matInput required formControlName="elastics" placeholder="Elastic servers" autocomplete="off">
       </mat-form-field>
       <mat-form-field>
-        <textarea matInput formControlName="query"  placeholder="query" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="50"></textarea>
+        <textarea matInput formControlName="query" placeholder="query" matTextareaAutosize matAutosizeMinRows="2"
+                  matAutosizeMaxRows="50"></textarea>
       </mat-form-field>
       <!--<mat-form-field>-->
-        <mat-radio-group matInput formControlName="matchType">
-          <mat-radio-button value="once">Option 1</mat-radio-button>
-          <mat-radio-button value="number">
-            <mat-slider  formControlName="slider"></mat-slider>
-            <mat-form-field>
-              {{alertForm.controls.slider.value}}
-              <mat-select placeholder="Period" formControlName="sliderPeriod">
-                <mat-option *ngFor="let p of selectValues" [value]="p.value">
+      <mat-radio-group matInput formControlName="match_type">
+        <mat-radio-button value="once">Once</mat-radio-button>
+        <mat-radio-button value="number">
+          <mat-slider formControlName="match_frequency"></mat-slider>
+          <mat-form-field>
+            {{alertForm.controls.match_frequency.value}}
 
-                  {{ p.viewValue }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <mat-select placeholder="Period" formControlName="match_period">
+              <mat-option *ngFor="let p of selectValues" [value]="p.value">
+                {{ p.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
 
-          </mat-radio-button>
-        </mat-radio-group>
-        <!--<textarea matInput formControlName="MatchOnce"  placeholder="query" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="50"></textarea>-->
+        </mat-radio-button>
+      </mat-radio-group>
+      <!--<textarea matInput formControlName="MatchOnce"  placeholder="query" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="50"></textarea>-->
       <!--</mat-form-field>-->
       <!--<mat-form-field>-->
-        <!--<input type="hidden" formControlName="id">-->
+      <!--<input type="hidden" formControlName="id">-->
       <!--</mat-form-field>-->
 
       <app-alert-target [group]="alertForm.controls.targets"></app-alert-target>
 
       <!--<div formArrayName="emails">-->
-        <!--<mat-list>-->
-          <!--<h3 mat-subheader>Emails</h3>-->
-          <!--<mat-list-item *ngFor="let email of alertForm.controls.emails.controls; let i=index">-->
-            <!--<mat-icon mat-list-icon>mail</mat-icon>-->
-            <!--<div [formGroupName]="i">-->
-              <!--<app-alert-recipient-email [group]="alertForm.controls.emails.controls[i]"></app-alert-recipient-email>-->
-            <!--</div>-->
-            <!--<div (click)="removeEmail(i)">-->
-              <!--<mat-icon>delete</mat-icon>-->
-            <!--</div>-->
-          <!--</mat-list-item>-->
-          <!--<mat-list-item>-->
-            <!--<button type="button" mat-button (click)="addEmail()">-->
-              <!--Add another email-->
-              <!--<mat-icon mat-list-icon>add</mat-icon>-->
-            <!--</button>-->
-          <!--</mat-list-item>-->
-          <!--<mat-divider></mat-divider>-->
-        <!--</mat-list>-->
+      <!--<mat-list>-->
+      <!--<h3 mat-subheader>Emails</h3>-->
+      <!--<mat-list-item *ngFor="let email of alertForm.controls.emails.controls; let i=index">-->
+      <!--<mat-icon mat-list-icon>mail</mat-icon>-->
+      <!--<div [formGroupName]="i">-->
+      <!--<app-alert-recipient-email [group]="alertForm.controls.emails.controls[i]"></app-alert-recipient-email>-->
+      <!--</div>-->
+      <!--<div (click)="removeEmail(i)">-->
+      <!--<mat-icon>delete</mat-icon>-->
+      <!--</div>-->
+      <!--</mat-list-item>-->
+      <!--<mat-list-item>-->
+      <!--<button type="button" mat-button (click)="addEmail()">-->
+      <!--Add another email-->
+      <!--<mat-icon mat-list-icon>add</mat-icon>-->
+      <!--</button>-->
+      <!--</mat-list-item>-->
+      <!--<mat-divider></mat-divider>-->
+      <!--</mat-list>-->
       <!--</div>-->
       <pre>{{alertForm.value|json}}</pre>
 

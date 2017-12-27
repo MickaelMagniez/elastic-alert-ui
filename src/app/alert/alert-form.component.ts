@@ -29,9 +29,9 @@ export class AlertFormComponent implements OnInit {
       name: ['', Validators.required],
       elastics: ['', Validators.required],
       query: ['', Validators.required],
-      matchType: ['', Validators.required],
-      slider: [1, Validators.required],
-      sliderPeriod: ['minute', Validators.required],
+      match_type: ['once', Validators.required],
+      match_frequency: [1, Validators.required],
+      match_period: ['minute', Validators.required],
       targets: this._fb.group({
         // emails: this._fb.array([])
       })
