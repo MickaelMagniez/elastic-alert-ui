@@ -9,9 +9,38 @@
       <mat-form-field>
         <input matInput required formControlName="name" placeholder="Alert name" autocomplete="off">
       </mat-form-field>
-      <mat-form-field>
-        <input matInput required formControlName="elastics" placeholder="Elastic servers" autocomplete="off">
-      </mat-form-field>
+
+
+      <div [formGroup]="alertForm.controls.elastic">
+        <mat-form-field>
+          <input matInput required formControlName="url" placeholder="URL (http://127.0.0.1:9200)" autocomplete="off"
+                 [matAutocomplete]="autoUrl">
+        </mat-form-field>
+        <mat-autocomplete #autoUrl="matAutocomplete">
+          <mat-option *ngFor="let elastic of elastics" [value]="elastic">
+            {{ elastic }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-form-field>
+          <input matInput required formControlName="index" placeholder="Index" autocomplete="off"   [matAutocomplete]="autoIndex">
+        </mat-form-field>
+        <mat-autocomplete #autoIndex="matAutocomplete">
+          <mat-option *ngFor="let index of indices" [value]="index">
+            {{ index }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-form-field>
+          <input matInput required formControlName="type" placeholder="Type" autocomplete="off"   [matAutocomplete]="autoType">
+        </mat-form-field>
+        <mat-autocomplete #autoType="matAutocomplete">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+
       <mat-form-field>
         <textarea matInput formControlName="query" placeholder="query" matTextareaAutosize matAutosizeMinRows="2"
                   matAutosizeMaxRows="50"></textarea>

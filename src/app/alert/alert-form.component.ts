@@ -19,15 +19,26 @@ export class AlertFormComponent implements OnInit {
     {value: 'hour', viewValue: 'per Hour'}
   ];
 
+  elastics: string[] = [];
+  indices: string[] = [];
+  types: string[] = [];
+
   constructor(private route: ActivatedRoute, private _fb: FormBuilder, private alertService: AlertService) {
 
+    this.alertService.getElastics().subscribe(elastics => {
+      this.elastics = elastics['servers'];
+    });
   }
 
   ngOnInit() {
     this.alertForm = this._fb.group({
       id: [''],
       name: ['', Validators.required],
-      elastics: ['', Validators.required],
+      elastic:  this._fb.group({
+        url: ['', Validators.required],
+        index: ['', Validators.required],
+        type: ['', Validators.required],
+      }),
       query: ['', Validators.required],
       match_type: ['once', Validators.required],
       match_frequency: [1, Validators.required],
@@ -37,6 +48,19 @@ export class AlertFormComponent implements OnInit {
       })
     });
     // window.aaa = this.alertForm;
+
+    this.alertForm.get('elastic').get('url').valueChanges.subscribe(val => {
+      this.alertService.getElasticIndices(val).subscribe(elastics => {
+        this.indices = elastics['indices'];
+      });
+    });
+
+    this.alertForm.get('elastic').get('index').valueChanges.subscribe(val => {
+      console.log(this.alertForm.value.elastic.url)
+      this.alertService.getElasticTypes(this.alertForm.value.elastic.url, val).subscribe(elastics => {
+        this.types = elastics['types'];
+      });
+    });
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {

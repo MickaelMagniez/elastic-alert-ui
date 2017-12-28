@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {
+  MatAutocompleteModule,
   MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatOptionModule,
   MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule,
@@ -48,6 +49,7 @@ import {AlertTargetComponent} from "./alert/alert-target.component";
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    MatAutocompleteModule,
     MatListModule,
     FormsModule,
     ReactiveFormsModule,

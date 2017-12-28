@@ -16,6 +16,7 @@ const httpOptions = {
 export class AlertService {
 
   private alertApiUrl = 'http://127.0.0.1:8080/alert';
+  private elasticsApiUrl = 'http://127.0.0.1:8080/elastics';
 
   constructor(
     private http: HttpClient,
@@ -64,6 +65,29 @@ export class AlertService {
       .pipe(
         tap(_ => this.log(`updated alert`)),
         catchError(this.handleError('updateAlert', null))
+      );
+  }
+
+
+  getElastics (): Observable<string> {
+    return this.http.get<Alert>(this.elasticsApiUrl )
+      .pipe(
+        tap(_ => this.log(`got elastics`)),
+        catchError(this.handleError('getElastics', null))
+      );
+  }
+  getElasticIndices (url: string): Observable<string> {
+    return this.http.get<Alert>(this.elasticsApiUrl + '/indices', {params: {url: url}} )
+      .pipe(
+        tap(_ => this.log(`got elastics`)),
+        catchError(this.handleError('getElasticIndices', null))
+      );
+  }
+  getElasticTypes (url: string, index: string): Observable<string> {
+    return this.http.get<Alert>(this.elasticsApiUrl + '/types', {params: {url: url, index: index}} )
+      .pipe(
+        tap(_ => this.log(`got elastics`)),
+        catchError(this.handleError('getElasticTypes', null))
       );
   }
   //
