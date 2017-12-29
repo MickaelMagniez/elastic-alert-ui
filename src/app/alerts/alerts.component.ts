@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Alert} from '../alert';
 import {AlertService} from '../alert.service';
 
@@ -8,7 +8,7 @@ import {AlertService} from '../alert.service';
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.css']
 })
-export class AlertsComponent {
+export class AlertsComponent implements OnInit {
   alerts: Alert[];
 
   constructor(private alertService: AlertService) {
@@ -22,7 +22,7 @@ export class AlertsComponent {
     this.alertService.getAlerts()
       .subscribe(alerts => {
         console.log('got alerts', alerts);
-        this.alerts = alerts['alerts'];
+        this.alerts = alerts;
       });
   }
 

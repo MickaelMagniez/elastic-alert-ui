@@ -13,7 +13,6 @@ export class AlertFormComponent implements OnInit {
     name: new FormControl()
   });
 
-
   selectValues = [
     {value: 'minute', viewValue: 'per Minute'},
     {value: 'hour', viewValue: 'per Hour'}
@@ -26,7 +25,7 @@ export class AlertFormComponent implements OnInit {
   constructor(private route: ActivatedRoute, private _fb: FormBuilder, private alertService: AlertService) {
 
     this.alertService.getElastics().subscribe(elastics => {
-      this.elastics = elastics['servers'];
+      this.elastics = elastics;
     });
   }
 
@@ -51,14 +50,14 @@ export class AlertFormComponent implements OnInit {
 
     this.alertForm.get('elastic').get('url').valueChanges.subscribe(val => {
       this.alertService.getElasticIndices(val).subscribe(elastics => {
-        this.indices = elastics['indices'];
+        this.indices = elastics;
       });
     });
 
     this.alertForm.get('elastic').get('index').valueChanges.subscribe(val => {
       console.log(this.alertForm.value.elastic.url)
       this.alertService.getElasticTypes(this.alertForm.value.elastic.url, val).subscribe(elastics => {
-        this.types = elastics['types'];
+        this.types = elastics;
       });
     });
 

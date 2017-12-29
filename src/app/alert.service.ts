@@ -15,18 +15,17 @@ const httpOptions = {
 @Injectable()
 export class AlertService {
 
-  private alertApiUrl = 'http://127.0.0.1:8080/alert';
+  private alertApiUrl = 'http://127.0.0.1:8080/alerts';
   private elasticsApiUrl = 'http://127.0.0.1:8080/elastics';
 
   constructor(
     private http: HttpClient,
-    // private messageService: MessageService
   ) { }
 
   getAlerts (): Observable<Alert[]> {
     return this.http.get<Alert[]>(this.alertApiUrl)
       .pipe(
-        tap(alerts => this.log(`fetched alerts`)),
+        tap(alerts => this.log('fetched alerts')),
         catchError(this.handleError('getAlerts', []))
       );
   }
@@ -34,12 +33,11 @@ export class AlertService {
   getAlert (id: string): Observable<Alert> {
     return this.http.get<Alert>(this.alertApiUrl + '/' + id)
       .pipe(
-        map(_alert => {
-          const alert: Alert = _alert['alert'];
+        map(alert => {
           alert.targets.emails = alert.targets.emails || [];
           return alert;
         }),
-        tap(alert => this.log(`got alert`)),
+        tap(alert => this.log('got alert')),
         catchError(this.handleError('getAlert', null))
       );
   }
@@ -47,7 +45,7 @@ export class AlertService {
   deleteAlert (id: string): Observable<string> {
     return this.http.delete<string>(this.alertApiUrl + '/' + id)
       .pipe(
-        tap(_ => this.log(`deleted alert`)),
+        tap(_ => this.log('deleted alert')),
         catchError(this.handleError('deleteAlert', ''))
       );
   }
@@ -55,7 +53,7 @@ export class AlertService {
   createAlert (alert: Alert): Observable<Alert> {
     return this.http.post<Alert>(this.alertApiUrl, alert, httpOptions)
       .pipe(
-        tap(_ => this.log(`created alert`)),
+        tap(_ => this.log('created alert')),
         catchError(this.handleError('createAlert', null))
       );
   }
@@ -63,54 +61,54 @@ export class AlertService {
   updateAlert (alert: Alert): Observable<Alert> {
     return this.http.put<Alert>(this.alertApiUrl + '/' + alert.id, alert, httpOptions)
       .pipe(
-        tap(_ => this.log(`updated alert`)),
+        tap(_ => this.log('updated alert')),
         catchError(this.handleError('updateAlert', null))
       );
   }
 
 
-  getElastics (): Observable<string> {
+  getElastics (): Observable<string[]> {
     return this.http.get<Alert>(this.elasticsApiUrl )
       .pipe(
-        tap(_ => this.log(`got elastics`)),
+        tap(_ => this.log('got elastics')),
         catchError(this.handleError('getElastics', null))
       );
   }
-  getElasticIndices (url: string): Observable<string> {
+  getElasticIndices (url: string): Observable<string[]> {
     return this.http.get<Alert>(this.elasticsApiUrl + '/indices', {params: {url: url}} )
       .pipe(
-        tap(_ => this.log(`got elastics`)),
+        tap(_ => this.log('got elastics')),
         catchError(this.handleError('getElasticIndices', null))
       );
   }
-  getElasticTypes (url: string, index: string): Observable<string> {
+  getElasticTypes (url: string, index: string): Observable<string[]> {
     return this.http.get<Alert>(this.elasticsApiUrl + '/types', {params: {url: url, index: index}} )
       .pipe(
-        tap(_ => this.log(`got elastics`)),
+        tap(_ => this.log('got elastics')),
         catchError(this.handleError('getElasticTypes', null))
       );
   }
   //
-  // /** GET hero by id. Return `undefined` when id not found */
+  // /** GET hero by id. Return 'undefined' when id not found */
   // getHeroNo404<Data>(id: number): Observable<Hero> {
-  //   const url = `${this.alertApiUrl}/?id=${id}`;
+  //   const url = '${this.alertApiUrl}/?id=${id}';
   //   return this.http.get<Hero[]>(url)
   //     .pipe(
   //       map(heroes => heroes[0]), // returns a {0|1} element array
   //       tap(h => {
-  //         const outcome = h ? `fetched` : `did not find`;
-  //         this.log(`${outcome} hero id=${id}`);
+  //         const outcome = h ? 'fetched' : 'did not find';
+  //         this.log('${outcome} hero id=${id}');
   //       }),
-  //       catchError(this.handleError<Hero>(`getHero id=${id}`))
+  //       catchError(this.handleError<Hero>('getHero id=${id}'))
   //     );
   // }
   //
   // /** GET hero by id. Will 404 if id not found */
   // getHero(id: number): Observable<Hero> {
-  //   const url = `${this.alertApiUrl}/${id}`;
+  //   const url = '${this.alertApiUrl}/${id}';
   //   return this.http.get<Hero>(url).pipe(
-  //     tap(_ => this.log(`fetched hero id=${id}`)),
-  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
+  //     tap(_ => this.log('fetched hero id=${id}')),
+  //     catchError(this.handleError<Hero>('getHero id=${id}'))
   //   );
   // }
   //
@@ -120,8 +118,8 @@ export class AlertService {
   //     // if not search term, return empty hero array.
   //     return of([]);
   //   }
-  //   return this.http.get<Hero[]>(`api/heroes/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
+  //   return this.http.get<Hero[]>('api/heroes/?name=${term}').pipe(
+  //     tap(_ => this.log('found heroes matching "${term}"')),
   //     catchError(this.handleError<Hero[]>('searchHeroes', []))
   //   );
   // }
@@ -131,7 +129,7 @@ export class AlertService {
   // /** POST: add a new hero to the server */
   // addHero (hero: Hero): Observable<Hero> {
   //   return this.http.post<Hero>(this.alertApiUrl, hero, httpOptions).pipe(
-  //     tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+  //     tap((hero: Hero) => this.log('added hero w/ id=${hero.id}')),
   //     catchError(this.handleError<Hero>('addHero'))
   //   );
   // }
@@ -139,10 +137,10 @@ export class AlertService {
   // /** DELETE: delete the hero from the server */
   // deleteHero (hero: Hero | number): Observable<Hero> {
   //   const id = typeof hero === 'number' ? hero : hero.id;
-  //   const url = `${this.alertApiUrl}/${id}`;
+  //   const url = '${this.alertApiUrl}/${id}';
   //
   //   return this.http.delete<Hero>(url, httpOptions).pipe(
-  //     tap(_ => this.log(`deleted hero id=${id}`)),
+  //     tap(_ => this.log('deleted hero id=${id}')),
   //     catchError(this.handleError<Hero>('deleteHero'))
   //   );
   // }
@@ -150,7 +148,7 @@ export class AlertService {
   // /** PUT: update the hero on the server */
   // updateHero (hero: Hero): Observable<any> {
   //   return this.http.put(this.alertApiUrl, hero, httpOptions).pipe(
-  //     tap(_ => this.log(`updated hero id=${hero.id}`)),
+  //     tap(_ => this.log('updated hero id=${hero.id}')),
   //     catchError(this.handleError<any>('updateHero'))
   //   );
   // }
@@ -168,16 +166,14 @@ export class AlertService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.log('${operation} failed: ${error.message}');
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    // this.messageService.add('HeroService: ' + message);
-    console.log('HeroService: ' + message);
+    console.log('AlertService: ' + message);
   }
 }
